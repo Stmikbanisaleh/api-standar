@@ -4,16 +4,16 @@ const axios = require('axios');
 
 // eslint-disable-next-line arrow-body-style
 // eslint-disable-next-line camelcase
-const register = async (email, password, name, role_id) => {
+const register = async (insert) => {
   return new Promise((resolve, reject) => {
     axios({
-      url: `${process.env.API_GATEWAY_URL}/users/register`,
+      url: `${process.env.API_GATEWAY_URL}/usersv2/register`,
       method: 'POST',
       data: {
-        email: email,
-        password: password,
-        name: name,
-        role_id: role_id,
+        email: insert.email,
+        password: insert.password,
+        nama_lengkap: insert.nama_lengkap,
+        role_id: insert.role_id,
       },
     })
       .then((response) => {

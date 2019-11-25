@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-undef */
+/* eslint-disable no-multi-assign */
 const Joi = require('joi');
 const { gettoken } = require('../libraries/login');
 const { register } = require('../libraries/register');
@@ -28,7 +31,7 @@ exports.userToken = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(402).json({
       error,
       status: 402,
       data: 'required',
@@ -36,31 +39,47 @@ exports.userToken = async (req, res) => {
   }
 };
 
+// Register
 exports.userRegister = async (req, res) => {
   try {
     const validate = Joi.object().keys({
       email: Joi.string().required(),
-      password: Joi.string().required(),
     });
 
     const payload = {
       email: req.body.email,
-      password: req.body.password,
     };
 
-    Joi.validate(validate, payload, async () => {
+    Joi.validate(payload, validate, async () => {
+      const insert = {
+        email,
+        password,
+        role_id,
+        is_active,
+        no_handphone,
+        fax,
+        nama_lengkap,
+        no_ktp,
+        alamat,
+        id_provinsi,
+        id_kota,
+
+      } = req.body;
       try {
-        const data = await register(req.body.email, req.body.password);
-        res.status(200).json(data);
+      // eslint-disable-next-line max-len
+        const data = await register(insert);
+        res.status(200).json({
+          response: data,
+        });
       } catch (error) {
-        res.status(400).json({
-          status: 500,
+        res.status(401).json({
+          status: 401,
           messages: error,
         });
       }
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(402).json({
       error,
       status: 402,
       data: 'required',

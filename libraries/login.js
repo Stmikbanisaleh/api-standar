@@ -6,7 +6,7 @@ const axios = require('axios');
 const gettoken = async (email, password) => {
   return new Promise((resolve, reject) => {
     axios({
-      url: `${process.env.API_GATEWAY_URL}/users/login`,
+      url: `${process.env.API_GATEWAY_URL}/usersv2/login`,
       method: 'POST',
       data: {
         email: email,
