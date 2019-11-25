@@ -12,8 +12,15 @@ const register = async (insert) => {
       data: {
         email: insert.email,
         password: insert.password,
-        nama_lengkap: insert.nama_lengkap,
         role_id: insert.role_id,
+        is_active: insert.is_active,
+        no_handphone: insert.no_handphone,
+        fax: insert.fax,
+        nama_lengkap: insert.nama_lengkap,
+        no_ktp: insert.no_ktp,
+        alamat: insert.alamat,
+        id_provinsi: insert.id_provinsi,
+        id_kota: insert.id_kota,
       },
     })
       .then((response) => {
