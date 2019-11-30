@@ -22,6 +22,7 @@ router.post('/getusulandiajukanbyuser', checkAuth, usulanController.GetUsulanDia
 router.post('/getusulanditerimabyuser', checkAuth, usulanController.GetUsulanDiterimaByUser);
 router.post('/getprosesperumusanbyuser', checkAuth, usulanController.GetProsesPerumusanByUser);
 router.post('/getprosesperumusan', checkAuth, usulanController.GetProsesPerumusan);
+router.post('/getdetail', checkAuth, usulanController.GetDetail);
 
 
 

@@ -319,3 +319,24 @@ exports.GetProsesPerumusan = async (req, res) => {
     });
   }
 };
+
+exports.GetDetail = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+    SELECT msusulan.*,
+      (SELECT nama_rev FROM msrev WHERE id = msusulan.jenis_perumusan) as jenis_perumusan,
+      (SELECT nama_rev FROM msrev WHERE id = msusulan.jalur_perumusan) as jalur_perumusan,
+      (SELECT nama_rev FROM msrev WHERE id = msusulan.komite_teknis) as komtek,
+      (SELECT nama_rev FROM msrev WHERE id = msusulan.proses_perumusan) as tahapan
+    FROM msusulan 
+    WHERE id = "${req.body.id}"
+    `, { type: usulanSchema.sequelize.QueryTypes.SELECT }).then((data) => {
+      res.status(200).json(data);
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
