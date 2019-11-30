@@ -15,6 +15,7 @@ router.post('/getrumusansl', checkAuth, usulanController.GetrumusanSL);
 router.post('/getsni', checkAuth, usulanController.GetSNI);
 router.post('/getsl', checkAuth, usulanController.GetSL);
 router.post('/getusulandraft', checkAuth, usulanController.GetUsulanDraft);
+router.post('/getusulandiajukan', checkAuth, usulanController.GetUsulanDiajukan);
 router.post('/getdetailuser', checkAuth, usulanController.GetDetailUser);
 router.post('/getusulandraftbyuser', checkAuth, usulanController.GetUsulanDraftByUser);
 router.post('/getusulandiajukanbyuser', checkAuth, usulanController.GetUsulanDiajukanByUser);

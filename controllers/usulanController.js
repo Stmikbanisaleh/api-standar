@@ -126,10 +126,10 @@ exports.GetSL = async (req, res) => {
 exports.GetUsulanDraft = async (req, res) => {
   try {
     usulanSchema.sequelize.query('SELECT `msusulan`.*,(SELECT nama_rev FROM '
-        + ' msrev WHERE id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, SELECT '
-        + ' nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek,SELECT '
+        + ' msrev WHERE id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, (SELECT '
+        + ' nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek, (SELECT '
         + ' nama_rev FROM msrev WHERE id = `msusulan`.`PROSES_USULAN`) as tahapan FROM `msusulan` '
-       + ' WHERE `STATUS` = 99"', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+       + ' WHERE `STATUS` = 99', { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);
       });
