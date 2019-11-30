@@ -289,7 +289,7 @@ exports.GetProsesPerumusanByUser = async (req, res) => {
         (SELECT nama_rev FROM msrev WHERE id = msusulan.komite_teknis) as komtek,
         (SELECT nama_rev FROM msrev WHERE id = msusulan.PROSES_PERUMUSAN) as tahapan 
       FROM msusulan
-      WHERE proses_perumusan = "80" AND user_input = "${req.body.user_input}"
+      WHERE proses_perumusan = "${req.body.proses_perumusan}" AND user_input = "${req.body.user_input}"
     `, { type: usulanSchema.sequelize.QueryTypes.SELECT }).then((data) => {
       res.status(200).json(data);
     });
@@ -306,9 +306,9 @@ exports.GetProsesPerumusan = async (req, res) => {
     usulanSchema.sequelize.query(`
       SELECT msusulan.*,(SELECT nama_rev FROM msrev WHERE id = msusulan.jenis_perumusan) as jenis_perumusan,
         (SELECT nama_rev FROM msrev WHERE id = msusulan.komite_teknis) as komtek,
-        (SELECT nama_rev FROM msrev WHERE id = msusulan.PROSES_PERUMUSAN) as tahapan 
+        (SELECT nama_rev FROM msrev WHERE id = msusulan.proses_perumusan) as tahapan 
       FROM msusulan
-      WHERE proses_perumusan = "80"
+      WHERE proses_perumusan = "${req.body.proses_perumusan}"
     `, { type: usulanSchema.sequelize.QueryTypes.SELECT }).then((data) => {
       res.status(200).json(data);
     });
