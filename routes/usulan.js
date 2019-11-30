@@ -20,7 +20,8 @@ router.post('/getdetailuser', checkAuth, usulanController.GetDetailUser);
 router.post('/getusulandraftbyuser', checkAuth, usulanController.GetUsulanDraftByUser);
 router.post('/getusulandiajukanbyuser', checkAuth, usulanController.GetUsulanDiajukanByUser);
 router.post('/getusulanditerimabyuser', checkAuth, usulanController.GetUsulanDiterimaByUser);
-router.post('/getusulanditolakbyuser', checkAuth, usulanController.GetUsulanDitolakByUser);
+router.post('/getprosesperumusanbyuser', checkAuth, usulanController.GetProsesPerumusanByUser);
+
 
 
 module.exports = router;
