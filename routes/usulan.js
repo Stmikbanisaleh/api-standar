@@ -35,6 +35,9 @@ router.post('/add_d_konseptor', usulanController.AddDKonseptor);
 router.post('/add_d_kepentingan', usulanController.AddDKepentingan);
 router.post('/add_d_manfaat', usulanController.AddDManfaat);
 router.post('/add_d_regulasi', usulanController.AddDRegulasi);
+router.post('/getprosesperumusanbyuser', checkAuth, usulanController.GetProsesPerumusanByUser);
+router.post('/getprosesperumusan', checkAuth, usulanController.GetProsesPerumusan);
+router.post('/getdetail', checkAuth, usulanController.GetDetail);
 
 
 module.exports = router;
