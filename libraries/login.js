@@ -23,5 +23,24 @@ const gettoken = async (email, password) => {
 };
 
 // eslint-disable-next-line arrow-body-style
+const getUserDetails = async (id) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      url: `${process.env.API_GATEWAY_URL}/usersv2/getuserbyid`,
+      method: 'POST',
+      data: {
+        id: id,
+      },
+    })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
 
-module.exports = { gettoken };
+// eslint-disable-next-line arrow-body-style
+
+module.exports = { gettoken, getUserDetails };

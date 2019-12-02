@@ -1,5 +1,14 @@
+/* eslint-disable global-require */
+/* eslint-disable import/order */
 const usulanSchema = require('../models/usulanModel');
+const konseptorUtamaSchema = require('../models/konseptorutamaModel');
+const dkonseptorSchema = require('../models/dkonseptorModel');
+const dkepentinganSchema = require('../models/dkepentinganModel');
+const dmanfaatSchema = require('../models/dmanfaatModel');
+const dregulasiSchema = require('../models/dregulasiModel');
 
+
+const fs = require('fs');
 //  Get Token
 exports.JumlahUsulan = async (req, res) => {
   try {
@@ -166,7 +175,7 @@ exports.GetUsulanDiajukan = async (req, res) => {
             + ' id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, '
     + ' (SELECT nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek, '
     + '(SELECT nama_rev FROM msrev WHERE id = `msusulan`.`PROSES_USULAN`) as tahapan FROM `msusulan`'
-    + 'WHERE `STATUS` = 99', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+    + 'WHERE `STATUS` = 100', { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);
       });
@@ -184,7 +193,7 @@ exports.GetUsulanDiajukanByUser = async (req, res) => {
           + ' id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, '
   + ' (SELECT nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek, '
   + '(SELECT nama_rev FROM msrev WHERE id = `msusulan`.`PROSES_USULAN`) as tahapan FROM `msusulan`'
-  + 'WHERE `STATUS` = 99 AND `USER_INPUT`= "'}${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+  + 'WHERE `STATUS` = 100 AND `USER_INPUT`= "'}${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);
       });
@@ -202,7 +211,7 @@ exports.GetUsulanDiterima = async (req, res) => {
               + ' id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, '
       + ' (SELECT nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek, '
       + '(SELECT nama_rev FROM msrev WHERE id = `msusulan`.`PROSES_USULAN`) as tahapan FROM `msusulan`'
-      + 'WHERE `STATUS` = 99', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      + 'WHERE `STATUS` = 102', { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);
       });
@@ -220,7 +229,7 @@ exports.GetUsulanDiterimaByUser = async (req, res) => {
             + ' id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, '
     + ' (SELECT nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek, '
     + '(SELECT nama_rev FROM msrev WHERE id = `msusulan`.`PROSES_USULAN`) as tahapan FROM `msusulan`'
-    + 'WHERE `STATUS` = 99 AND `USER_INPUT`= "'}${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+    + 'WHERE `STATUS` = 102 AND `USER_INPUT`= "'}${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);
       });
@@ -238,7 +247,7 @@ exports.GetUsulanDitolak = async (req, res) => {
               + ' id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, '
       + ' (SELECT nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek, '
       + '(SELECT nama_rev FROM msrev WHERE id = `msusulan`.`PROSES_USULAN`) as tahapan FROM `msusulan`'
-      + 'WHERE `STATUS` = 99', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      + 'WHERE `STATUS` = 101', { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);
       });
@@ -256,7 +265,7 @@ exports.GetUsulanDitolakByUser = async (req, res) => {
             + ' id = `msusulan`.`JENIS_PERUMUSAN`) as jenis_perumusan, '
     + ' (SELECT nama_rev FROM msrev WHERE id = `msusulan`.`KOMITE_TEKNIS`) as komtek, '
     + '(SELECT nama_rev FROM msrev WHERE id = `msusulan`.`PROSES_USULAN`) as tahapan FROM `msusulan`'
-    + 'WHERE `STATUS` = 99 AND `USER_INPUT`= "'}${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+    + 'WHERE `STATUS` = 101 AND `USER_INPUT`= "'}${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);
       });
@@ -278,6 +287,171 @@ exports.GetDetailUser = async (req, res) => {
     res.status(400).json({
       status: 500,
       messages: error,
+    });
+  }
+};
+
+exports.AddUsulan = async (req, res) => {
+  const base64Data = req.body.dok_detail_penelitian_64;
+  const base64Data2 = req.body.dok_org_pendukung_64;
+  const base64Data3 = req.body.surat_pengajuan_64;
+  const base64Data4 = req.body.outline_64;
+
+  fs.writeFileSync(`./public/file/${req.body.dok_detail_penelitian}`, base64Data, 'base64', () => {
+  });
+
+  fs.writeFileSync(`./public/file/${req.body.dok_org_pendukung}`, base64Data2, 'base64', () => {
+  });
+
+  fs.writeFileSync(`./public/file/${req.body.surat_pengajuan}`, base64Data3, 'base64', () => {
+  });
+
+  fs.writeFileSync(`./public/file/${req.body.outline}`, base64Data4, 'base64', () => {
+  });
+
+  const payload = {
+    jenis_standar: req.body.jenis_standar,
+    komiter_teknis: req.body.komiter_teknis,
+    judul: req.body.judul,
+    ruang_lingkup: req.body.ruang_lingkup,
+    detail_penelitian: req.body.detail_penelitian,
+    dok_detail_penelitian: req.body.dok_detail_penelitian,
+    tujuan_perumusan: req.body.tujuan_perumusan,
+    org_pendukung: req.body.org_pendukung,
+    dok_org_pendukung: req.body.dok_org_pendukung,
+    surat_pengajuan: req.body.surat_pengajuan,
+    outline: req.body.outline,
+    evaluasi: req.body.evaluasi,
+    status: req.body.status,
+    proses_usulan: req.body.proses_usulan,
+    user_input: req.body.user_input,
+    tgl_input: req.body.tgl_input,
+  };
+
+  try {
+    usulanSchema.create(payload)
+      .then((result) => res.status(201).json({
+        status: 200,
+        messages: 'Usulan berhasil ditambahkan',
+        id: result.id,
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddKonseptor = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+    alamat: req.body.alamat,
+    email: req.body.email,
+    telepon: req.body.telepon,
+  };
+
+  try {
+    konseptorUtamaSchema.create(payload)
+      .then((result) => res.status(201).json({
+        status: 200,
+        messages: 'Konseptor Utama berhasil ditambahkan',
+        id: result.id,
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddDKonseptor = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+    instantsi: req.body.instantsi,
+  };
+
+  try {
+    dkonseptorSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Konseptor berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddDKepentingan = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+    instantsi: req.body.instantsi,
+  };
+
+  try {
+    dkepentinganSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Kepentingan berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddDManfaat = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+    isi: req.body.isi,
+  };
+
+  try {
+    dmanfaatSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Manfaat berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddDRegulasi = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+  };
+
+  try {
+    dregulasiSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Regulasi berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
     });
   }
 };

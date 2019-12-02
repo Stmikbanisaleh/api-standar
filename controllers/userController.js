@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-multi-assign */
 const Joi = require('joi');
-const { gettoken } = require('../libraries/login');
+const { gettoken, getUserDetails } = require('../libraries/login');
 const { register } = require('../libraries/register');
 
 
@@ -74,6 +74,50 @@ exports.userRegister = async (req, res) => {
       } catch (error) {
         res.status(401).json({
           status: 401,
+          messages: error,
+        });
+      }
+    });
+  } catch (error) {
+    res.status(402).json({
+      error,
+      status: 402,
+      data: 'required',
+    });
+  }
+};
+
+exports.getUserDetail = async (req, res) => {
+  try {
+    provinsiSchema.sequelize.query('select id_prov, nama from msprovinsi', { type: provinsiSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.userDetail = async (req, res) => {
+  try {
+    const validate = Joi.object().keys({
+      id: Joi.string().required(),
+    });
+
+    const payload = {
+      id: req.body.id,
+    };
+
+    Joi.validate(validate, payload, async () => {
+      try {
+        const data = await getUserDetails(req.body.id);
+        res.status(200).json(data);
+      } catch (error) {
+        res.status(400).json({
+          status: 500,
           messages: error,
         });
       }
