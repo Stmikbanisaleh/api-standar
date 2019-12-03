@@ -38,6 +38,11 @@ router.post('/add_d_regulasi', usulanController.AddDRegulasi);
 router.post('/getprosesperumusanbyuser', checkAuth, usulanController.GetProsesPerumusanByUser);
 router.post('/getprosesperumusan', checkAuth, usulanController.GetProsesPerumusan);
 router.post('/getdetail', checkAuth, usulanController.GetDetail);
+router.post('/addperbaikan', checkAuth, usulanController.AddPerbaikan);
+router.post('/add_d_acuansni', checkAuth, usulanController.AddDacuansni);
+router.post('/add_d_acuannonsni', checkAuth, usulanController.AddDacuansni);
+router.post('/add_d_bibliografi', checkAuth, usulanController.AddDbibliografi);
+router.post('/add_d_lpk', checkAuth, usulanController.AddDbibliografi);
 
 
 module.exports = router;

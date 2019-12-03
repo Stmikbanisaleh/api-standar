@@ -6,6 +6,11 @@ const dkonseptorSchema = require('../models/dkonseptorModel');
 const dkepentinganSchema = require('../models/dkepentinganModel');
 const dmanfaatSchema = require('../models/dmanfaatModel');
 const dregulasiSchema = require('../models/dregulasiModel');
+const dperbaikanSchema = require('../models/dperbaikanModel');
+const dacuansniSchema = require('../models/dacuansniModel');
+const dacuannonsniSchema = require('../models/dacuannonsniModel');
+const dbibliografiSchema = require('../models/dbibliografiModel');
+const dlpkSchema = require('../models/dlpkModel');
 
 
 const fs = require('fs');
@@ -395,7 +400,6 @@ exports.AddDKepentingan = async (req, res) => {
   const payload = {
     id_usulan: req.body.id_usulan,
     nama: req.body.nama,
-    instantsi: req.body.instantsi,
   };
 
   try {
@@ -416,7 +420,6 @@ exports.AddDKepentingan = async (req, res) => {
 exports.AddDManfaat = async (req, res) => {
   const payload = {
     id_usulan: req.body.id_usulan,
-    nama: req.body.nama,
     isi: req.body.isi,
   };
 
@@ -446,6 +449,109 @@ exports.AddDRegulasi = async (req, res) => {
       .then(() => res.status(201).json({
         status: 200,
         messages: 'Regulasi berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddPerbaikan = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+  };
+
+  try {
+    dperbaikanSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Perbaikan berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddDAcuansni = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+  };
+
+  try {
+    dacuansniSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Perbaikan berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddDlpk = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+  };
+
+  try {
+    dlpkSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Perbaikan berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+exports.AddDAcuannonsni = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+  };
+
+  try {
+    dacuannonsniSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Perbaikan berhasil ditambahkan',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.AddDbibliografi = async (req, res) => {
+  const payload = {
+    id_usulan: req.body.id_usulan,
+    nama: req.body.nama,
+  };
+
+  try {
+    dbibliografiSchema.create(payload)
+      .then(() => res.status(201).json({
+        status: 200,
+        messages: 'Bibliografi berhasil ditambahkan',
       }));
   } catch (e) {
     res.status(400).json({
