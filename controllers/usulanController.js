@@ -173,6 +173,61 @@ exports.GetUsulanDraftByUser = async (req, res) => {
   }
 };
 
+exports.GetUsulanById = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`select * from msusulan where id = ${req.body.id}`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetPerbaikanById = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`select * from d_perbaikan where id_usulan = ${req.body.id}`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetPerumusanSNI = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query('select * from msrev where golongan = 22', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetPerumusanSL = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query('select * from msrev where golongan = 23', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
 
 exports.GetUsulanDiajukan = async (req, res) => {
   try {
@@ -296,22 +351,22 @@ exports.GetDetailUser = async (req, res) => {
   }
 };
 
-exports.AddUsulan = async (req, res) => {
+exports.AddUsulan = (req, res) => {
   const base64Data = req.body.dok_detail_penelitian_64;
   const base64Data2 = req.body.dok_org_pendukung_64;
   const base64Data3 = req.body.surat_pengajuan_64;
   const base64Data4 = req.body.outline_64;
 
-  fs.writeFileSync(`./public/file/${req.body.dok_detail_penelitian}`, base64Data, 'base64', () => {
+  fs.writeFile(`./public/file/${req.body.dok_detail_penelitian}`, base64Data, 'base64', () => {
   });
 
-  fs.writeFileSync(`./public/file/${req.body.dok_org_pendukung}`, base64Data2, 'base64', () => {
+  fs.writeFile(`./public/file/${req.body.dok_org_pendukung}`, base64Data2, 'base64', () => {
   });
 
-  fs.writeFileSync(`./public/file/${req.body.surat_pengajuan}`, base64Data3, 'base64', () => {
+  fs.writeFile(`./public/file/${req.body.surat_pengajuan}`, base64Data3, 'base64', () => {
   });
 
-  fs.writeFileSync(`./public/file/${req.body.outline}`, base64Data4, 'base64', () => {
+  fs.writeFile(`./public/file/${req.body.outline}`, base64Data4, 'base64', () => {
   });
 
   const payload = {
@@ -335,7 +390,7 @@ exports.AddUsulan = async (req, res) => {
 
   try {
     usulanSchema.create(payload)
-      .then((result) => res.status(201).json({
+      .then((result) => res.status(200).json({
         status: 200,
         messages: 'Usulan berhasil ditambahkan',
         id: result.id,
@@ -360,7 +415,7 @@ exports.AddKonseptor = async (req, res) => {
 
   try {
     konseptorUtamaSchema.create(payload)
-      .then((result) => res.status(201).json({
+      .then((result) => res.status(200).json({
         status: 200,
         messages: 'Konseptor Utama berhasil ditambahkan',
         id: result.id,
@@ -383,7 +438,7 @@ exports.AddDKonseptor = async (req, res) => {
 
   try {
     dkonseptorSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Konseptor berhasil ditambahkan',
       }));
@@ -404,7 +459,7 @@ exports.AddDKepentingan = async (req, res) => {
 
   try {
     dkepentinganSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Kepentingan berhasil ditambahkan',
       }));
@@ -425,7 +480,7 @@ exports.AddDManfaat = async (req, res) => {
 
   try {
     dmanfaatSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Manfaat berhasil ditambahkan',
       }));
@@ -446,7 +501,7 @@ exports.AddDRegulasi = async (req, res) => {
 
   try {
     dregulasiSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Regulasi berhasil ditambahkan',
       }));
@@ -463,10 +518,9 @@ exports.AddPerbaikan = async (req, res) => {
   const payload = {
     id_usulan: req.body.id_usulan,
   };
-
   try {
     dperbaikanSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Perbaikan berhasil ditambahkan',
       }));
@@ -479,7 +533,7 @@ exports.AddPerbaikan = async (req, res) => {
   }
 };
 
-exports.AddDAcuansni = async (req, res) => {
+exports.AddDacuansni = async (req, res) => {
   const payload = {
     id_usulan: req.body.id_usulan,
     nama: req.body.nama,
@@ -487,7 +541,7 @@ exports.AddDAcuansni = async (req, res) => {
 
   try {
     dacuansniSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Perbaikan berhasil ditambahkan',
       }));
@@ -508,7 +562,7 @@ exports.AddDlpk = async (req, res) => {
 
   try {
     dlpkSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Perbaikan berhasil ditambahkan',
       }));
@@ -528,7 +582,7 @@ exports.AddDAcuannonsni = async (req, res) => {
 
   try {
     dacuannonsniSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Perbaikan berhasil ditambahkan',
       }));
@@ -549,7 +603,7 @@ exports.AddDbibliografi = async (req, res) => {
 
   try {
     dbibliografiSchema.create(payload)
-      .then(() => res.status(201).json({
+      .then(() => res.status(200).json({
         status: 200,
         messages: 'Bibliografi berhasil ditambahkan',
       }));
@@ -613,6 +667,110 @@ exports.GetDetail = async (req, res) => {
     `, { type: usulanSchema.sequelize.QueryTypes.SELECT }).then((data) => {
       res.status(200).json(data);
     });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusUsulan = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`delete from msusulan where id = ${req.body.id}`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusDKonseptorutama = async (req, res) => {
+  try {
+    dkonseptorSchema.sequelize.query(`delete from d_konseptor_utama where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusDKonseptor = async (req, res) => {
+  try {
+    dkonseptorSchema.sequelize.query(`delete from d_konseptor where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusPikahKepentingan = async (req, res) => {
+  try {
+    dkepentinganSchema.sequelize.query(`delete from d_pihak_berkepentingan where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusDManfaat = async (req, res) => {
+  try {
+    dmanfaatSchema.sequelize.query(`delete from d_manfaat where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusDRegulasi = async (req, res) => {
+  try {
+    dregulasiSchema.sequelize.query(`delete from d_regulasi where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.Ajukan = async (req, res) => {
+  try {
+    usulanSchema.update({
+      status: 100,
+    }, {
+      where: {
+        id: req.body.id,
+      },
+    })
+      .then((response) => {
+        res.status(200).json(response);
+      });
   } catch (error) {
     res.status(400).json({
       status: 500,
