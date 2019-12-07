@@ -476,6 +476,62 @@ exports.AddUsulan = (req, res) => {
   }
 };
 
+exports.UpdateUsulan = (req, res) => {
+  const base64Data = req.body.dok_detail_penelitian_64;
+  const base64Data2 = req.body.dok_org_pendukung_64;
+  const base64Data3 = req.body.surat_pengajuan_64;
+  const base64Data4 = req.body.outline_64;
+
+  fs.writeFile(`./public/file/${req.body.dok_detail_penelitian}`, base64Data, 'base64', () => {
+  });
+
+  fs.writeFile(`./public/file/${req.body.dok_org_pendukung}`, base64Data2, 'base64', () => {
+  });
+
+  fs.writeFile(`./public/file/${req.body.surat_pengajuan}`, base64Data3, 'base64', () => {
+  });
+
+  fs.writeFile(`./public/file/${req.body.outline}`, base64Data4, 'base64', () => {
+  });
+
+  const payload = {
+    jenis_standar: req.body.jenis_standar,
+    komite_teknis: req.body.komite_teknis,
+    judul: req.body.judul,
+    ruang_lingkup: req.body.ruang_lingkup,
+    detail_penelitian: req.body.detail_penelitian,
+    dok_detail_penelitian: req.body.dok_detail_penelitian,
+    tujuan_perumusan: req.body.tujuan_perumusan,
+    org_pendukung: req.body.org_pendukung,
+    dok_org_pendukung: req.body.dok_org_pendukung,
+    surat_pengajuan: req.body.surat_pengajuan,
+    outline: req.body.outline,
+    evaluasi: req.body.evaluasi,
+    status: req.body.status,
+    proses_usulan: req.body.proses_usulan,
+    user_input: req.body.user_input,
+    tgl_input: req.body.tgl_input,
+  };
+
+  try {
+    usulanSchema.update(payload, {
+      where: {
+        id: req.body.id,
+      },
+    })
+      .then(() => res.status(200).json({
+        status: 200,
+        messages: 'Usulan berhasil diupdate',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
 exports.AddKonseptor = async (req, res) => {
   const payload = {
     id_usulan: req.body.id_usulan,
@@ -831,6 +887,62 @@ exports.HapusDRegulasi = async (req, res) => {
   }
 };
 
+exports.HapusAcuanSNI = async (req, res) => {
+  try {
+    dregulasiSchema.sequelize.query(`delete from d_acuan_sni where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusAcuanNonSNI = async (req, res) => {
+  try {
+    dregulasiSchema.sequelize.query(`delete from d_acuan_nonsni where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusDbibliografi = async (req, res) => {
+  try {
+    dregulasiSchema.sequelize.query(`delete from d_bibliografi where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.HapusDlpk = async (req, res) => {
+  try {
+    dregulasiSchema.sequelize.query(`delete from d_lpk where id_usulan = "${req.body.id}"`)
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
 exports.Ajukan = async (req, res) => {
   try {
     usulanSchema.update({
@@ -899,6 +1011,153 @@ exports.SaveProsesUsulan = (req, res) => {
       status: 'ERROR',
       messages: e,
       data: {},
+    });
+  }
+};
+
+exports.GetUsulanDraftDetail = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+        SELECT msusulan.*,
+          (SELECT nama_rev FROM msrev WHERE id = msusulan.JENIS_PERUMUSAN) as jenis_perumusan,
+          (SELECT nama_rev FROM msrev WHERE id = msusulan.KOMITE_TEKNIS) as komtek
+        FROM msusulan
+        WHERE STATUS = 99 AND ID = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetDKonseptorUtama = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_konseptor_utama 
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetDKonseptor = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_konseptor
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetDManfaat = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_manfaat
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetDRegulasi = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_regulasi
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.getDSNI = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_acuan_sni
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.getDNonSNI = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_acuan_nonsni
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.getDBibliografi = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_bibliografi
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.getDLpk = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_lpk
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
     });
   }
 };

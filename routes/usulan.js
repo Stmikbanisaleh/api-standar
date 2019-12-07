@@ -49,6 +49,10 @@ router.post('/hapusdkepentingan', checkAuth, usulanController.HapusPikahKepentin
 router.post('/hapusdkonseptor', checkAuth, usulanController.HapusDKonseptor);
 router.post('/hapusdkonseptorutama', checkAuth, usulanController.HapusDKonseptorutama);
 router.post('/hapusdkregulasi', checkAuth, usulanController.HapusDRegulasi);
+router.post('/hapusacuansni', checkAuth, usulanController.HapusAcuanSNI);
+router.post('/hapusacuannonsni', checkAuth, usulanController.HapusAcuanNonSNI);
+router.post('/hapusdbibliografi', checkAuth, usulanController.HapusDbibliografi);
+router.post('/hapusdlpk', checkAuth, usulanController.HapusDlpk);
 router.post('/ajukan', checkAuth, usulanController.Ajukan);
 router.post('/getusulanbyid', checkAuth, usulanController.GetUsulanById);
 router.post('/getperbaikanbyid', checkAuth, usulanController.GetPerbaikanById);
@@ -58,6 +62,15 @@ router.post('/getjenisadopsi', checkAuth, usulanController.GetJenisAdopsi);
 router.post('/getmetodeadopsi', checkAuth, usulanController.GetMetodeAdopsi);
 router.post('/getstatus', checkAuth, usulanController.GetStatus);
 router.post('/savepembatalan', checkAuth, usulanController.AddPembatalan);
-
+router.post('/getusulandraftdetail', checkAuth, usulanController.GetUsulanDraftDetail);
+router.post('/getdkonseptorutama', checkAuth, usulanController.GetDKonseptorUtama);
+router.post('/getdkonseptor', checkAuth, usulanController.GetDKonseptor);
+router.post('/getdmanfaat', checkAuth, usulanController.GetDManfaat);
+router.post('/getdregulasi', checkAuth, usulanController.GetDRegulasi);
+router.post('/getdsni', checkAuth, usulanController.getDSNI);
+router.post('/getdnonsni', checkAuth, usulanController.getDNonSNI);
+router.post('/getdbibliografi', checkAuth, usulanController.getDBibliografi);
+router.post('/getdlpk', checkAuth, usulanController.getDLpk);
+router.post('/updateusulan', checkAuth, usulanController.UpdateUsulan);
 
 module.exports = router;
