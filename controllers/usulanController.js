@@ -883,7 +883,6 @@ exports.SaveProsesUsulan = (req, res) => {
     proses_usulan: req.body.proses_usulan,
     proses_perumusan: req.body.proses_perumusan,
   };
-
   try {
     usulanSchema.update(payload, {
       where: {
@@ -900,5 +899,135 @@ exports.SaveProsesUsulan = (req, res) => {
       messages: e,
       data: {},
     });
+  }
+};
+
+exports.UpdateDPerbaikan = (req, res) => {
+  const base64Data = req.body.surat_pengantar_164;
+  const base64Data2 = req.body.surat_pengantar_264;
+  const base64Data3 = req.body.surat_pengantar_364;
+  const base64Data4 = req.body.surat_pengantar_464;
+  //
+  const base64Data5 = req.body.rsni_164;
+  const base64Data6 = req.body.rsni_264;
+  const base64Data7 = req.body.rsni_364;
+  const base64Data8 = req.body.rsni_464;
+  //
+  const base64Data9 = req.body.notulensi_164;
+  const base64Data10 = req.body.notulensi_264;
+  const base64Data11 = req.body.notulensi_364;
+  const base64Data12 = req.body.notulensi_464;
+  fs.writeFile(`./public/file/${req.body.surat_pengantar_1}`, base64Data, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.surat_pengantar_2}`, base64Data2, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.surat_pengantar_3}`, base64Data3, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.surat_pengantar_4}`, base64Data4, 'base64', () => {
+  });
+  //
+  fs.writeFile(`./public/file/${req.body.rsni_1}`, base64Data5, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.rsni_2}`, base64Data6, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.rsni_3}`, base64Data7, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.rsni_4}`, base64Data8, 'base64', () => {
+  });
+  //
+  fs.writeFile(`./public/file/${req.body.notulensi_1}`, base64Data9, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.notulensi_2}`, base64Data10, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.notulensi_3}`, base64Data11, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.notulensi_4}`, base64Data12, 'base64', () => {
+  });
+  const payload = {
+    surat_pengantar_1: req.body.surat_pengantar_1,
+    surat_pengantar_2: req.body.surat_pengantar_2,
+    surat_pengantar_3: req.body.surat_pengantar_3,
+    surat_pengantar_4: req.body.surat_pengantar_4,
+    rsni_1: req.body.rsni_1,
+    rsni_2: req.body.rsni_2,
+    rsni_3: req.body.rsni_3,
+    rsni_4: req.body.rsni_4,
+    notulensi_1: req.body.notulensi_1,
+    notulensi_2: req.body.notulensi_2,
+    notulensi_3: req.body.notulensi_3,
+    notulensi_4: req.body.notulensi_4,
+  };
+
+  try {
+    dperbaikanSchema.update(payload, {
+      where: {
+        id: req.body.id,
+      },
+    })
+      .then(() => res.status(200).json({
+        status: 200,
+        messages: 'Perbaikan berhasil diupdate',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
+exports.HapusDPerbaikan = async (req, res) => {
+  if (req.body.d_acuan_sni) {
+    try {
+      usulanSchema.sequelize.query(`delete from ${req.body.d_acuan_sni} where id_usulan = ${req.body.id}`)
+        .then((response) => {
+          res.status(200).json(response);
+        });
+    } catch (error) {
+      res.status(400).json({
+        status: 500,
+        messages: error,
+      });
+    }
+  }
+  if (req.body.d_acuan_nonsni) {
+    try {
+      usulanSchema.sequelize.query(`delete from ${req.body.d_acuan_nonsni} where id_usulan = ${req.body.id}`)
+        .then((response) => {
+          res.status(200).json(response);
+        });
+    } catch (error) {
+      res.status(400).json({
+        status: 500,
+        messages: error,
+      });
+    }
+  }
+  if (req.body.d_bibliografi) {
+    try {
+      usulanSchema.sequelize.query(`delete from ${req.body.d_bibliografi} where id_usulan = ${req.body.id}`)
+        .then((response) => {
+          res.status(200).json(response);
+        });
+    } catch (error) {
+      res.status(400).json({
+        status: 500,
+        messages: error,
+      });
+    }
+  }
+  if (req.body.d_lpk) {
+    try {
+      usulanSchema.sequelize.query(`delete from ${req.body.d_lpk} where id_usulan = ${req.body.id}`)
+        .then((response) => {
+          res.status(200).json(response);
+        });
+    } catch (error) {
+      res.status(400).json({
+        status: 500,
+        messages: error,
+      });
+    }
   }
 };

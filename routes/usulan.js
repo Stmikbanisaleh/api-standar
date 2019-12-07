@@ -58,6 +58,9 @@ router.post('/getjenisadopsi', checkAuth, usulanController.GetJenisAdopsi);
 router.post('/getmetodeadopsi', checkAuth, usulanController.GetMetodeAdopsi);
 router.post('/getstatus', checkAuth, usulanController.GetStatus);
 router.post('/savepembatalan', checkAuth, usulanController.AddPembatalan);
+router.post('/hapus_d_perbaikan', checkAuth, usulanController.HapusDPerbaikan);
+router.post('/saveprosesusulan', checkAuth, usulanController.SaveProsesUsulan);
+router.post('/update_d_perbaikan', checkAuth, usulanController.UpdateDPerbaikan);
 
 
 module.exports = router;
