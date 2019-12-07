@@ -72,5 +72,9 @@ router.post('/getdnonsni', checkAuth, usulanController.getDNonSNI);
 router.post('/getdbibliografi', checkAuth, usulanController.getDBibliografi);
 router.post('/getdlpk', checkAuth, usulanController.getDLpk);
 router.post('/updateusulan', checkAuth, usulanController.UpdateUsulan);
+router.post('/hapus_d_perbaikan', checkAuth, usulanController.HapusDPerbaikan);
+router.post('/saveprosesusulan', checkAuth, usulanController.SaveProsesUsulan);
+router.post('/update_d_perbaikan', checkAuth, usulanController.UpdateDPerbaikan);
+
 
 module.exports = router;
