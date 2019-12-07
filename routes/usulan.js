@@ -54,6 +54,10 @@ router.post('/getusulanbyid', checkAuth, usulanController.GetUsulanById);
 router.post('/getperbaikanbyid', checkAuth, usulanController.GetPerbaikanById);
 router.post('/getperumusansni', checkAuth, usulanController.GetPerumusanSNI);
 router.post('/getperumusansl', checkAuth, usulanController.GetPerumusanSL);
+router.post('/getjenisadopsi', checkAuth, usulanController.GetJenisAdopsi);
+router.post('/getmetodeadopsi', checkAuth, usulanController.GetMetodeAdopsi);
+router.post('/getstatus', checkAuth, usulanController.GetStatus);
+router.post('/savepembatalan', checkAuth, usulanController.AddPembatalan);
 
 
 module.exports = router;

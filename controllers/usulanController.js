@@ -215,6 +215,48 @@ exports.GetPerumusanSNI = async (req, res) => {
   }
 };
 
+exports.GetJenisAdopsi = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query('select * from msrev where golongan = 18', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetMetodeAdopsi = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query('select * from msrev where golongan = 19', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetStatus = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query('select * from msrev where golongan = 25', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
 exports.GetPerumusanSL = async (req, res) => {
   try {
     usulanSchema.sequelize.query('select * from msrev where golongan = 23', { type: usulanSchema.sequelize.QueryTypes.SELECT })
@@ -351,6 +393,36 @@ exports.GetDetailUser = async (req, res) => {
   }
 };
 
+exports.AddPembatalan = (req, res) => {
+  const base64Data = req.body.dok_pembatalan64;
+
+  fs.writeFile(`./public/file/${req.body.dok_pembatalan}`, base64Data, 'base64', () => {
+  });
+  const payload = {
+    status: req.body.status,
+    alasan_penolakan: req.body.alasan_penolakan,
+    dok_pembatalan: req.body.dok_pembatalan,
+  };
+
+  try {
+    usulanSchema.update(payload, {
+      where: {
+        id: req.body.id,
+      },
+    })
+      .then(() => res.status(200).json({
+        status: 200,
+        messages: 'Usulan berhasil diupdate',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+};
+
 exports.AddUsulan = (req, res) => {
   const base64Data = req.body.dok_detail_penelitian_64;
   const base64Data2 = req.body.dok_org_pendukung_64;
@@ -371,7 +443,7 @@ exports.AddUsulan = (req, res) => {
 
   const payload = {
     jenis_standar: req.body.jenis_standar,
-    komiter_teknis: req.body.komiter_teknis,
+    komite_teknis: req.body.komite_teknis,
     judul: req.body.judul,
     ruang_lingkup: req.body.ruang_lingkup,
     detail_penelitian: req.body.detail_penelitian,
@@ -775,6 +847,58 @@ exports.Ajukan = async (req, res) => {
     res.status(400).json({
       status: 500,
       messages: error,
+    });
+  }
+};
+
+
+exports.SaveProsesUsulan = (req, res) => {
+  const base64Data = req.body.dok_keb_mendesak64;
+  const base64Data2 = req.body.dok_kesediaan_paten64;
+
+  fs.writeFile(`./public/file/${req.body.dok_keb_mendesak}`, base64Data, 'base64', () => {
+  });
+  fs.writeFile(`./public/file/${req.body.dok_kesediaan_paten}`, base64Data2, 'base64', () => {
+  });
+  const payload = {
+    jenis_perumusan: req.body.jenis_perumusan,
+    jalur_perumusan: req.body.jalur_perumusan,
+    kode: req.body.kode,
+    no_sni_ralat: req.body.no_sni_ralat,
+    p_sni_ralat: req.body.p_sni_ralat,
+    no_sni_amademen: req.body.no_sni_amademen,
+    p_sni_amademen: req.body.p_sni_amademen,
+    no_sni_terjemah: req.body.no_sni_terjemah,
+    jenis_adopsi: req.body.jenis_adopsi,
+    metode_adopsi: req.body.metode_adopsi,
+    keb_mendesak: req.body.keb_mendesak,
+    dok_keb_mendesak: req.body.dok_keb_mendesak,
+    terkait_paten: req.body.terkait_paten,
+    dok_kesediaan_paten: req.body.dok_kesediaan_paten,
+    informasi_paten: req.body.informasi_paten,
+    kesesuaian: req.body.kesesuaian,
+    ulasan: req.body.ulasan,
+    status: req.body.status,
+    alasan_penolakan: req.body.alasan_penolakan,
+    proses_usulan: req.body.proses_usulan,
+    proses_perumusan: req.body.proses_perumusan,
+  };
+
+  try {
+    usulanSchema.update(payload, {
+      where: {
+        id: req.body.id,
+      },
+    })
+      .then(() => res.status(200).json({
+        status: 200,
+        messages: 'Usulan berhasil diupdate',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
     });
   }
 };

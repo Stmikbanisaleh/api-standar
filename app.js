@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const originRouter = require('./routes/origin');
 const usulanRouter = require('./routes/usulan');
+const downloadRouter = require('./routes/lib/download');
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/origin', originRouter);
 app.use('/usulan', usulanRouter);
+app.use('/lib/download', downloadRouter);
 
 
 // catch 404 and forward to error handler
