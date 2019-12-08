@@ -510,19 +510,23 @@ exports.UpdateUsulan = (req, res) => {
   const base64Data2 = req.body.dok_org_pendukung_64;
   const base64Data3 = req.body.surat_pengajuan_64;
   const base64Data4 = req.body.outline_64;
-
-  fs.writeFile(`./public/file/${req.body.dok_detail_penelitian}`, base64Data, 'base64', () => {
-  });
-
-  fs.writeFile(`./public/file/${req.body.dok_org_pendukung}`, base64Data2, 'base64', () => {
-  });
-
-  fs.writeFile(`./public/file/${req.body.surat_pengajuan}`, base64Data3, 'base64', () => {
-  });
-
-  fs.writeFile(`./public/file/${req.body.outline}`, base64Data4, 'base64', () => {
-  });
-
+  // console.log(base64Data);
+  if (base64Data !== undefined) {
+    fs.writeFile(`./public/file/${req.body.dok_detail_penelitian}`, base64Data, 'base64', () => {
+    });
+  }
+  if (base64Data2 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.dok_org_pendukung}`, base64Data2, 'base64', () => {
+    });
+  }
+  if (base64Data3 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.surat_pengajuan}`, base64Data3, 'base64', () => {
+    });
+  }
+  if (base64Data4 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.outline}`, base64Data4, 'base64', () => {
+    });
+  }
   const payload = {
     jenis_standar: req.body.jenis_standar,
     komite_teknis: req.body.komite_teknis,
@@ -997,10 +1001,14 @@ exports.SaveProsesUsulan = (req, res) => {
   const base64Data = req.body.dok_keb_mendesak64;
   const base64Data2 = req.body.dok_kesediaan_paten64;
 
-  fs.writeFile(`./public/file/${req.body.dok_keb_mendesak}`, base64Data, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.dok_kesediaan_paten}`, base64Data2, 'base64', () => {
-  });
+  if (base64Data2 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.dok_keb_mendesak}`, base64Data, 'base64', () => {
+    });
+  }
+  if (base64Data !== undefined) {
+    fs.writeFile(`./public/file/${req.body.dok_kesediaan_paten}`, base64Data2, 'base64', () => {
+    });
+  }
   const payload = {
     jenis_perumusan: req.body.jenis_perumusan,
     jalur_perumusan: req.body.jalur_perumusan,
@@ -1077,7 +1085,7 @@ exports.GetDKonseptorUtama = async (req, res) => {
     });
   }
 };
-     
+
 exports.UpdateDPerbaikan = (req, res) => {
   const base64Data = req.body.surat_pengantar_164;
   const base64Data2 = req.body.surat_pengantar_264;
@@ -1093,32 +1101,55 @@ exports.UpdateDPerbaikan = (req, res) => {
   const base64Data10 = req.body.notulensi_264;
   const base64Data11 = req.body.notulensi_364;
   const base64Data12 = req.body.notulensi_464;
-  fs.writeFile(`./public/file/${req.body.surat_pengantar_1}`, base64Data, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.surat_pengantar_2}`, base64Data2, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.surat_pengantar_3}`, base64Data3, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.surat_pengantar_4}`, base64Data4, 'base64', () => {
-  });
-  //
-  fs.writeFile(`./public/file/${req.body.rsni_1}`, base64Data5, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.rsni_2}`, base64Data6, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.rsni_3}`, base64Data7, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.rsni_4}`, base64Data8, 'base64', () => {
-  });
-  //
-  fs.writeFile(`./public/file/${req.body.notulensi_1}`, base64Data9, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.notulensi_2}`, base64Data10, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.notulensi_3}`, base64Data11, 'base64', () => {
-  });
-  fs.writeFile(`./public/file/${req.body.notulensi_4}`, base64Data12, 'base64', () => {
-  });
+  if (base64Data !== undefined) {
+    fs.writeFile(`./public/file/${req.body.surat_pengantar_1}`, base64Data, 'base64', () => {
+    });
+  }
+  if (base64Data2 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.surat_pengantar_2}`, base64Data2, 'base64', () => {
+    });
+  }
+  if (base64Data3 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.surat_pengantar_3}`, base64Data3, 'base64', () => {
+    });
+  }
+  if (base64Data4 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.surat_pengantar_4}`, base64Data4, 'base64', () => {
+    });
+  }
+  if (base64Data5 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.rsni_1}`, base64Data5, 'base64', () => {
+    });
+  }
+  if (base64Data6 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.rsni_2}`, base64Data6, 'base64', () => {
+    });
+  }
+  if (base64Data7 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.rsni_3}`, base64Data7, 'base64', () => {
+    });
+  }
+  if (base64Data8 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.rsni_4}`, base64Data8, 'base64', () => {
+    });
+  }
+  if (base64Data9 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.notulensi_1}`, base64Data9, 'base64', () => {
+    });
+  }
+  if (base64Data10 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.notulensi_2}`, base64Data10, 'base64', () => {
+    });
+  }
+  if (base64Data11 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.notulensi_3}`, base64Data11, 'base64', () => {
+    });
+  }
+  if (base64Data12 !== undefined) {
+    fs.writeFile(`./public/file/${req.body.notulensi_4}`, base64Data12, 'base64', () => {
+    });
+  }
+
   const payload = {
     surat_pengantar_1: req.body.surat_pengantar_1,
     surat_pengantar_2: req.body.surat_pengantar_2,
@@ -1157,6 +1188,22 @@ exports.GetDKonseptor = async (req, res) => {
   try {
     usulanSchema.sequelize.query(`
       SELECT * FROM d_konseptor
+      where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetDBerkepentingan = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query(`
+      SELECT * FROM d_pihak_berkepentingan
       where id_usulan = "${req.body.id}"`, { type: usulanSchema.sequelize.QueryTypes.SELECT })
       .then((data) => {
         res.status(200).json(data);

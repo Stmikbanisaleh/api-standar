@@ -20,6 +20,7 @@ router.post('/getusulandiajukan', checkAuth, usulanController.GetUsulanDiajukan)
 router.post('/getusulanditolak', checkAuth, usulanController.GetUsulanDitolak);
 router.post('/getusulanditerima', checkAuth, usulanController.GetUsulanDiterima);
 router.post('/getdetailuser', checkAuth, usulanController.GetDetailUser);
+router.post('/getdberkepentingan', checkAuth, usulanController.GetDBerkepentingan);
 router.post('/getusulandraftbyuser', checkAuth, usulanController.GetUsulanDraftByUser);
 router.post('/getusulandiajukanbyuser', checkAuth, usulanController.GetUsulanDiajukanByUser);
 router.post('/getusulanditerimabyuser', checkAuth, usulanController.GetUsulanDiterimaByUser);
