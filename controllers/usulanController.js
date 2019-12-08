@@ -215,6 +215,35 @@ exports.GetPerumusanSNI = async (req, res) => {
   }
 };
 
+exports.GetProsesUsulanSNI = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query('select * from msrev where golongan = 20', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+exports.GetProsesUsulanSL = async (req, res) => {
+  try {
+    usulanSchema.sequelize.query('select * from msrev where golongan = 21', { type: usulanSchema.sequelize.QueryTypes.SELECT })
+      .then((data) => {
+        res.status(200).json(data);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+};
+
+
 exports.GetJenisAdopsi = async (req, res) => {
   try {
     usulanSchema.sequelize.query('select * from msrev where golongan = 18', { type: usulanSchema.sequelize.QueryTypes.SELECT })
@@ -961,7 +990,7 @@ exports.UpdateDPerbaikan = (req, res) => {
   try {
     dperbaikanSchema.update(payload, {
       where: {
-        id: req.body.id,
+        id_usulan: req.body.id,
       },
     })
       .then(() => res.status(200).json({

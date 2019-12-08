@@ -61,6 +61,8 @@ router.post('/savepembatalan', checkAuth, usulanController.AddPembatalan);
 router.post('/hapus_d_perbaikan', checkAuth, usulanController.HapusDPerbaikan);
 router.post('/saveprosesusulan', checkAuth, usulanController.SaveProsesUsulan);
 router.post('/update_d_perbaikan', checkAuth, usulanController.UpdateDPerbaikan);
+router.post('/getprosesusulansni', checkAuth, usulanController.GetProsesUsulanSNI);
+router.post('/getprosesusulansl', checkAuth, usulanController.GetProsesUsulanSL);
 
 
 module.exports = router;
